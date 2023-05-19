@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard | Avaluo En Línea</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="<%= productDescription %>" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/app_avaluo/public/favicon.svg"
+    />
+  </head>
+  <body>
+    <!-- quasar:entry-point -->
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE3YLDQ6nKhdoWiykBIpJP3xZRr4j19Ak&callback=initMap"
+    ></script>
+  </body>
+</html>

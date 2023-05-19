@@ -1,0 +1,134 @@
+[
+    {
+        "label": "Amazonas",
+        "value": "91"
+    },
+    {
+        "label": "Antioquia",
+        "value": "05"
+    },
+    {
+        "label": "Arauca",
+        "value": "81"
+    },
+    {
+        "label": "Atlántico",
+        "value": "08"
+    },
+    {
+        "label": "Bogotá D.C.",
+        "value": "11"
+    },
+    {
+        "label": "Bolívar",
+        "value": "13"
+    },
+    {
+        "label": "Boyacá",
+        "value": "15"
+    },
+    {
+        "label": "Caldas",
+        "value": "17"
+    },
+    {
+        "label": "Caquetá",
+        "value": "18"
+    },
+    {
+        "label": "Casanare",
+        "value": "85"
+    },
+    {
+        "label": "Cauca",
+        "value": "19"
+    },
+    {
+        "label": "Cesar",
+        "value": "20"
+    },
+    {
+        "label": "Chocó",
+        "value": "27"
+    },
+    {
+        "label": "Córdoba",
+        "value": "23"
+    },
+    {
+        "label": "Cundinamarca",
+        "value": "25"
+    },
+    {
+        "label": "Guainía",
+        "value": "94"
+    },
+    {
+        "label": "Guaviare",
+        "value": "95"
+    },
+    {
+        "label": "Huila",
+        "value": "41"
+    },
+    {
+        "label": "La Guajira",
+        "value": "44"
+    },
+    {
+        "label": "Magdalena",
+        "value": "47"
+    },
+    {
+        "label": "Meta",
+        "value": "50"
+    },
+    {
+        "label": "Nariño",
+        "value": "52"
+    },
+    {
+        "label": "Norte de Santander",
+        "value": "54"
+    },
+    {
+        "label": "Putumayo",
+        "value": "86"
+    },
+    {
+        "label": "Quindío",
+        "value": "63"
+    },
+    {
+        "label": "Risaralda",
+        "value": "66"
+    },
+    {
+        "label": "San Andrés y Providencia",
+        "value": "88"
+    },
+    {
+        "label": "Santander",
+        "value": "68"
+    },
+    {
+        "label": "Sucre",
+        "value": "70"
+    },
+    {
+        "label": "Tolima",
+        "value": "73"
+    },
+    {
+        "label": "Valle del Cauca",
+        "value": "76"
+    },
+    {
+        "label": "Vaupés",
+        "value": "97"
+    },
+    {
+        "label": "Vichada",
+        "value": "99"
+    }
+]

@@ -1,0 +1,30 @@
+[
+    {
+        "label": "Avenida",
+        "value": "Avenida"
+    },
+    {
+        "label": "Calle",
+        "value": "Calle"
+    },
+    {
+        "label": "Avenida Calle",
+        "value": "Avenida Calle"
+    },
+    {
+        "label": "Carrera",
+        "value": "Carrera"
+    },
+    {
+        "label": "Avenida Carrera",
+        "value": "Avenida Carrera"
+    },
+    {
+        "label": "Diagonal",
+        "value": "Diagonal"
+    },
+    {
+        "label": "Transversal",
+        "value": "Transversal"
+    }
+]
