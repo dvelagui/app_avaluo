@@ -1,42 +1,26 @@
 <template>
-    <div class="q-pa-xl row wrap items-center justify-center container">
-        <h4 class="text-center">¡Hola {{ useDatabase.documents?.nickname }}! <br>¿Que quieres hacer hoy?</h4>
+    <div class="q-pa-xl column items-start justify-start">
+        <h4 class="title text-center">¡Hola {{ useDatabase.documents?.nickname }}!</h4>
+        <p class="subtitle q-mt-md">Administra y gestiona tu información en cualquier momento.</p>
     </div>
-    <section class="q-px-xl row wrap items-center justify-center container">
+    <section class="q-px-xl row wrap items-start justify-start q-gutter-xl">
 
-        <q-card class="my-card q-mx-xl shadow-5">
-            <q-img
-                src="https://firebasestorage.googleapis.com/v0/b/avaluo-en-linea-colombia.appspot.com/o/images%2Fpersonas-avaluo-inmueble.jpg?alt=media&token=13d46b14-b3ee-49cc-b346-8227844ea0d1">
-                <div class="absolute-bottom">
-                    <div class="text-h6 text-center text-avaluo">Personas</div>
-                    <div class="text-subtitle2 q-mt-md">Sal de dudas sobre comprar o vender inmuebles con el precio correcto
-                    </div>
-                </div>
-            </q-img>
+        <CardsHome homeImg="fa-solid fa-file" homeTitle="Crea tu ACM"
+            homeText="Solicita tu Análisis Comparativo de Mercado." homeUrl="/avaluo-inmueble" homeBtn="Crear" />
+        <CardsHome homeImg="fa-solid fa-file-pen" homeTitle="Solicita tu avalúo certificado"
+            homeText="Pide tu avalúo certificado fácil y rápido." homeUrl="/avaluo-certificado" homeBtn="Solicitar ahora" />
+        <CardsHome homeImg="fa-solid fa-file-lines" homeTitle="Historial de reportes"
+            homeText="Consulta  y descarga tus reportes mensuales." homeUrl="/reportes" homeBtn="Ver historial" />
+        <CardsHome homeImg="fa-solid fa-gear" homeTitle="Administración" homeText="Gestiona tus usuarios y suscripciones."
+            homeUrl="/administracion" homeBtn="Ver administración" />
+        <CardsHome homeImg="fa-solid fa-user" homeTitle="Datos personales"
+            homeText="Actualiza tu información cuando lo necesites." homeUrl="/mi-cuenta" homeBtn="Ver perfil" />
 
-            <q-card-actions align="center">
-                <q-btn @click="router.push(`${route.matched[0].path}avaluo-inmueble`)" color="primary">Avaluar
-                    Inmueble</q-btn>
-            </q-card-actions>
-        </q-card>
-        <q-card class="my-card q-mx-xl shadow-5">
-            <q-img
-                src="https://firebasestorage.googleapis.com/v0/b/avaluo-en-linea-colombia.appspot.com/o/images%2Fpersonas-avaluo-certificado.jpg?alt=media&token=a75ad1a8-750f-45b4-8b57-d5d5d6ae857f">
-                <div class="absolute-bottom">
-                    <div class="text-h6 text-center text-avaluo">Avalúo certificado</div>
-                    <div class="text-subtitle2 q-mt-md">Pide un avalúo certificado fácil y rápido</div>
-                </div>
-            </q-img>
-
-            <q-card-actions align="center">
-                <q-btn @click="router.push(`${route.matched[0].path}avaluo-inmueble`)" color="primary">Solicitar
-                    Avalúo</q-btn>
-            </q-card-actions>
-        </q-card>
     </section>
 </template>
 
 <script setup>
+import CardsHome from "../components/Home/CardsHome.vue";
 import { userDatabaseStore } from "../stores/database";
 import { useRouter, useRoute } from 'vue-router';
 
@@ -47,6 +31,26 @@ const route = useRoute();
 </script>
 
 <style lang="scss" scoped>
+.title {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+    color: #282A33;
+}
+
+.subtitle {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: -0.01em;
+    color: #6B7082;
+}
+
 .text-avaluo {
     font-family: 'Comfortaa';
     font-style: normal;

@@ -1,18 +1,23 @@
 <template>
   <q-page class="row items-center flex">
-    <div class="col-4">
-      <img style="width: 100%" alt="Avaluo En Linea" src="../assets/img_login.png">
+    <div class="col-12 col-md-4">
+      <img class="img-login" alt="Avaluo En Linea" src="../assets/img_login.png">
     </div>
     <div class="col-8">
       <div class="row justify-center items-start">
         <section class="col-6  self-center">
+          <div class="text-center q-mb-xl">
+            <a href="https://www.avaluoenlinea.com/" target="_blank">
+              <img class="img-logo" alt="Avaluo En Linea" src="../assets/logo_avaluo.svg" />
+            </a>
+          </div>
           <h3 class="login-h3">Crear Cuenta</h3>
           <p class="login-p">Ingresa tus datos y crea tu cuenta</p>
           <div style="max-width: 400px">
             <FormLogin btnSubmit="Registrate" @user-data="userDataInput = $event">
             </FormLogin>
-            <p class="q-mt-md">¿Ya tienes cuenta?<span class="text-primary cursor-pointer"
-                @click="router.push(`${route.matched[0].path}inicio-sesion`)">Inicia Sesión</span></p>
+            <p class="q-mt-md">¿Ya tienes cuenta? <span class="text-primary cursor-pointer"
+                @click="router.push(`${route.matched[0].path}inicio-sesion`)"> Inicia Sesión</span></p>
           </div>
         </section>
       </div>
@@ -25,27 +30,35 @@ import FormLogin from 'src/components/Login/FormLogin.vue';
 import { useUserStore } from "../stores/users";
 import { userDatabaseStore } from "../stores/database";
 import { useRouter, useRoute } from 'vue-router';
-import { ref, watch } from 'vue';
+import { provide, ref, watch } from 'vue';
 
-const userDataInput = ref({})
+const userDataInput = ref({});
 const userStore = useUserStore();
 const useDataBase = userDatabaseStore();
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 const usertype = ref('');
-const redirectPath = ref(route.query.redirect || '/')
+const userRegistered = ref('personas');
+const redirectPath = ref(route.query.redirect || '/');
 
 const defineUSer = () => {
-  usertype.value = route.matched[0].path.split('/')[1]
+  console.log(userRegistered.value);
+  usertype.value = ref(route.matched[0].path != '/' ? route.matched[0].path.split('/')[1] : userRegistered.value)
 }
 
+const changeUserRegistered = (usertype) => {
+  userRegistered.value = usertype
+}
 
 watch(userDataInput, async () => {
   defineUSer();
+  console.log(usertype.value._value);
   const userRegister = ({ ...userDataInput.value })
-  await userStore.createUser(userRegister.nickname, usertype.value, userRegister.email, userRegister.password);
-  router.push(redirectPath.value);
+  await userStore.createUser(userRegister.nickname, usertype.value._value, userRegister.email, userRegister.password);
+  router.push('/' + useDataBase.documents.typeUser + redirectPath.value);
 })
+
+provide('type', { userRegistered, changeUserRegistered })
 
 </script>
 
@@ -68,7 +81,10 @@ watch(userDataInput, async () => {
   line-height: 120%;
   letter-spacing: -0.01em;
   color: #6B7082;
-  margin-top: 8px;
+}
+
+.img-login {
+  height: 100vh;
 }
 </style>
 

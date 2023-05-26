@@ -5,19 +5,21 @@
 <script setup>
 import { useUserStore } from 'src/stores/users';
 import { userDatabaseStore } from "../../stores/database"
-import { toRefs, ref } from 'vue';
+import { toRefs, ref, inject } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { QSpinnerPuff, useQuasar } from 'quasar'
-const $q = useQuasar();
 
+const $q = useQuasar();
 const userStore = useUserStore();
 const useDataBase = userDatabaseStore();
 const router = useRouter();
 const route = useRoute();
 const usertype = ref('');
+const { userRegistered, changeUserRegistered } = inject('type');
+
 
 const defineUSer = () => {
-    usertype.value = route.matched[0].path.split('/')[1]
+    usertype.value = ref(route.matched[0].path != '/' ? route.matched[0].path.split('/')[1] : userRegistered.value)
 }
 
 const props = defineProps({
@@ -25,7 +27,7 @@ const props = defineProps({
 });
 
 const { btnGoogle } = toRefs(props);
-const redirectPath = ref(route.query.redirect || '/')
+const redirectPath = ref(route.query.redirect || '')
 
 const accessGoogle = async () => {
     if (!userStore.loadingUser) {
@@ -36,12 +38,12 @@ const accessGoogle = async () => {
                 spinnerColor: 'primary',
                 spinnerSize: 250,
                 backgroundColor: 'black',
-                message: 'Estas Ingresando a un mundo increible',
+                message: 'Autenticando Usuario en Avalúo En Línea',
                 messageColor: 'white'
             }
         )
-        await userStore.registerGoogle(usertype.value);
-        router.push(useDataBase.documents.typeUser + redirectPath.value)
+        await userStore.registerGoogle(usertype.value._value);
+        router.push('/' + useDataBase.documents.typeUser + redirectPath.value)
         $q.loading.hide()
     }
 }

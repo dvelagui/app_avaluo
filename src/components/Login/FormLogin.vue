@@ -1,6 +1,6 @@
 <template>
+  <UserType v-show="btnSubmit === 'Registrate' && route.matched[0].path === '/'" />
   <FormGoogle :btnGoogle="btnSubmit" />
-  <FormPhone :btnGoogle="btnSubmit" />
   <article class="q-mt-lg">
     <p>ó {{ btnSubmit }} con tu Email</p>
   </article>
@@ -22,12 +22,14 @@
 
 <script setup>
 import FormGoogle from "./FormGoogle.vue"
-import FormPhone from "./FormPhone.vue";
-import { ref, toRefs } from "vue";
+import UserType from "./UserType.vue";
 import { useUserStore } from "src/stores/users";
+import { useRoute } from 'vue-router';
 import { useQuasar } from 'quasar'
+import { ref, toRefs } from "vue";
 
 const userStore = useUserStore();
+const route = useRoute();
 const nickname = ref('');
 const email = ref('');
 const password = ref('');

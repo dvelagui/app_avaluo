@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md container">
     <h2>Ubica el inmueble</h2>
     <p class="q-mt-md">Digita la dirección del inmueble, revisa el punto de ubicación en el mapa y continua con el
       reporte.
@@ -60,7 +60,7 @@
       <input type="text" :value="longitude" readonly />
     </div>
     <div>
-      <div id="map"></div>
+
     </div>
   </div>
 </template>
@@ -68,8 +68,7 @@
 <script setup>
 import departaments from "../../../data/departaments.json";
 import streetOptions from "../../../data/streetOptions.json";
-import GoogleMaps from "./GoogleMaps.vue";
-import { onMounted, ref, inject } from "vue";
+import { ref, inject } from "vue";
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyDE3YLDQ6nKhdoWiykBIpJP3xZRr4j19Ak"
 const selectedDepartment = ref("");
@@ -151,7 +150,7 @@ const getCoordinates = () => {
 
 };
 
-const initMap = () => {
+/* const initMap = () => {
   // Map
   const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: latitude.value, lng: longitude.value },
@@ -161,12 +160,16 @@ const initMap = () => {
     position: { lat: latitude.value, lng: longitude.value },
     map: map,
   });
-}
-onMounted(() => {
-  initMap()
-})
+} */
+
 </script>
 <style lang="scss" scoped>
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 h2 {
   font-family: 'Source Sans Pro';
   font-style: normal;

@@ -1,19 +1,11 @@
 <template>
     <div class="q-pl-xl">
-        <div class="row items-center justify-start q-mb-xl">
-            <div class="col-12 col-md-1">
-                <AvatarImage style="width: 120px; height: 120px;" />
-            </div>
-            <div class="col-12 col-md-4">
-                <ChangeImageProfile />
-            </div>
-        </div>
         <div class="row items-center justify-start q-my-xl">
             <div class="col-12 col-md-4 q-px-md">
                 <NameProfile />
             </div>
             <div class="col-12 col-md-4 q-px-md">
-                <EmailProfile />
+                <AddressProfile />
             </div>
         </div>
         <div class="row items-center justify-start q-my-xl">
@@ -21,7 +13,7 @@
                 <PhoneProfile />
             </div>
             <div class="col-12 col-md-4 q-px-md">
-                <PasswordProfile />
+                <EmailProfile />
             </div>
         </div>
     </div>
@@ -36,7 +28,6 @@ import EmailProfile from './DataProfile/EmailProfile.vue';
 import PhoneProfile from './DataProfile/PhoneProfile.vue';
 import AddressProfile from './DataProfile/AddressProfile.vue';
 import CompanyProfile from './DataProfile/CompanyProfile.vue';
-import PasswordProfile from './DataProfile/PasswordProfile.vue';
 
 
 

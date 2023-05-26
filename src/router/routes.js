@@ -1,10 +1,44 @@
 import { useUserStore } from "src/stores/users";
+import { userDatabaseStore } from "../stores/database";
+import { useRoute } from "vue-router";
 
-const requireAuth = async (to, from, next) => {
+const requireAuthEmpresas = async (to, from, next) => {
   const userStore = useUserStore();
+  const useDataBase = userDatabaseStore();
   const user = await userStore.currentUser();
   if (user) {
-    next();
+    const userPath = await useDataBase.getUserData();
+    if (useDataBase.documents.typeUser === "empresas") {
+      next();
+    } else {
+      next("/");
+    }
+  } else {
+    next("/inicio-sesion");
+  }
+};
+const requireAuthPersonas = async (to, from, next) => {
+  const userStore = useUserStore();
+  const useDataBase = userDatabaseStore();
+  const user = await userStore.currentUser();
+  if (user) {
+    const userPath = await useDataBase.getUserData();
+    if (useDataBase.documents.typeUser === "personas") {
+      next();
+    } else {
+      next("/");
+    }
+  } else {
+    next("/inicio-sesion");
+  }
+};
+const userPathHome = async (to, from, next) => {
+  const userStore = useUserStore();
+  const useDataBase = userDatabaseStore();
+  const user = await userStore.currentUser();
+  if (user) {
+    const userPath = await useDataBase.getUserData();
+    next(`/${useDataBase.documents.typeUser}`);
   } else {
     next("/inicio-sesion");
   }
@@ -22,13 +56,13 @@ const userIsAuthenticated = async (to, from, next) => {
 
 const routes = [
   {
-    path: "/personas/",
+    path: "/personas",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
         component: () => import("pages/DashboardPage.vue"),
-        beforeEnter: requireAuth,
+        beforeEnter: requireAuthPersonas,
       },
       {
         path: "inicio-sesion",
@@ -43,22 +77,78 @@ const routes = [
       {
         path: "avaluo-inmueble",
         component: () => import("../pages/FormReport.vue"),
-        beforeEnter: requireAuth,
+        beforeEnter: requireAuthPersonas,
+      },
+      {
+        path: "avaluo-certificado",
+        component: () => import("../pages/FormReport.vue"),
+        beforeEnter: requireAuthPersonas,
       },
       {
         path: "reportes",
         component: () => import("../pages/ReportPage.vue"),
-        beforeEnter: requireAuth,
+        beforeEnter: requireAuthPersonas,
       },
       {
         path: "vista-reporte",
         component: () => import("../pages/ReportView.vue"),
-        beforeEnter: requireAuth,
+        beforeEnter: requireAuthPersonas,
       },
       {
         path: "mi-cuenta",
         component: () => import("pages/AccountPage.vue"),
-        beforeEnter: requireAuth,
+        beforeEnter: requireAuthPersonas,
+      },
+    ],
+  },
+  {
+    path: "/empresas",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/DashboardPage.vue"),
+        beforeEnter: requireAuthEmpresas,
+      },
+      {
+        path: "inicio-sesion",
+        component: () => import("../pages/LoginPage.vue"),
+        beforeEnter: userIsAuthenticated,
+      },
+      {
+        path: "registro",
+        component: () => import("../pages/RegisterPage.vue"),
+        beforeEnter: userIsAuthenticated,
+      },
+      {
+        path: "avaluo-inmueble",
+        component: () => import("../pages/FormReport.vue"),
+        beforeEnter: requireAuthEmpresas,
+      },
+      {
+        path: "avaluo-certificado",
+        component: () => import("../pages/FormReport.vue"),
+        beforeEnter: requireAuthEmpresas,
+      },
+      {
+        path: "reportes",
+        component: () => import("../pages/ReportPage.vue"),
+        beforeEnter: requireAuthEmpresas,
+      },
+      {
+        path: "vista-reporte",
+        component: () => import("../pages/ReportView.vue"),
+        beforeEnter: requireAuthEmpresas,
+      },
+      {
+        path: "mi-cuenta",
+        component: () => import("pages/AccountPage.vue"),
+        beforeEnter: requireAuthEmpresas,
+      },
+      {
+        path: "administracion",
+        component: () => import("pages/AdminPage.vue"),
+        beforeEnter: requireAuthEmpresas,
       },
     ],
   },
@@ -69,7 +159,7 @@ const routes = [
       {
         path: "",
         component: () => import("../pages/DashboardPage.vue"),
-        beforeEnter: requireAuth,
+        beforeEnter: userPathHome,
       },
       {
         path: "inicio-sesion",
@@ -87,7 +177,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/ErrorNotFound.vue"),
+    redirect: "/inicio-sesion",
   },
 ];
 

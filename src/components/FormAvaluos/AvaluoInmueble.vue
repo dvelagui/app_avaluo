@@ -1,64 +1,50 @@
+
 <template>
-    <div class="q-pa-xl">
-        <q-stepper v-model="step" vertical color="primary" animated>
-            <q-step :name="1" title="Ubica el inmueble" icon="mdi-numeric-1" :done="step > 1">
-                <div class="content-step">
-                    <ubicacion-mapa />
-                    <q-stepper-navigation class="text-end">
-                        <q-btn @click="step = 2" color="primary" label="Continuar" />
-                    </q-stepper-navigation>
-                </div>
+    <div>
+        <div class="q-pa-xl column items-start justify-start">
+            <h4 class="title text-center">Avalúo Inmueble</h4>
+        </div>
+        <q-stepper class="q-pa-xl" v-model="step" ref="stepper" color="primary" animated>
+            <q-step class="q-px-xl" :name="1" title="Ubica el inmueble" icon="fa-solid fa-1" :done="step > 1">
+                <ubicacion-mapa class="q-px-xl" />
             </q-step>
 
-            <q-step :name="2" title="Características del inmueble" icon="mdi-numeric-2" :done="step > 2">
-                <div class="content-step">
-
-                    <caracteristicas-inmueble />
-                    <q-stepper-navigation>
-                        <q-btn flat @click="step = 1" color="primary" label="Volver" class="q-ml-sm" />
-                        <q-btn @click="step = 3" color="primary" label="Continuar" />
-                    </q-stepper-navigation>
-                </div>
+            <q-step class="q-px-xl" :name="2" title="Características del inmueble" icon="fa-solid fa-2" :done="step > 2">
+                <caracteristicas-inmueble class="q-px-xl" />
             </q-step>
 
-            <q-step :name="3" title="Datos personales" icon="mdi-numeric-3" :done="step > 3">
-                <div class="content-step">
-
-                    <datos-personales />
-
-
-                    <q-stepper-navigation>
-                        <q-btn flat @click="step = 2" color="primary" label="Volver" class="q-ml-sm" />
-                        <q-btn @click="step = 4" color="primary" label="Continuar" />
-                    </q-stepper-navigation>
-                </div>
+            <q-step class="q-px-xl" :name="3" title="Datos personales" icon="fa-solid fa-3" :done="step > 3">
+                <datos-personales class="q-px-xl" />
             </q-step>
 
-            <q-step :name="4" title="Escoge tu reporte" icon="mdi-numeric-4">
-                <div class="content-step">
-
-                    <tipo-reporte />
-
-                    <q-stepper-navigation>
-                        <q-btn flat @click="step = 3" color="primary" label="Volver" class="q-ml-sm" />
-                        <q-btn @click="addReport" color="primary" label="Finalizar" />
-                    </q-stepper-navigation>
-                </div>
+            <q-step class="q-px-xl" :name="4" title="Escoge tu reporte" icon="fa-solid fa-4">
+                <tipo-reporte class="q-px-xl" />
             </q-step>
+
+            <template v-slot:navigation>
+                <q-stepper-navigation class="text-right q-mr-xl">
+                    <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Volver"
+                        class="q-ml-sm" />
+                    <q-btn @click="step === 4 ? addReport() : $refs.stepper.next()" color="primary"
+                        :label="step === 4 ? 'Finalizar' : 'Continuar'" />
+                </q-stepper-navigation>
+            </template>
         </q-stepper>
     </div>
 </template>
   
 <script setup>
-import { provide, ref } from 'vue'
-import { reportDatabaseStore } from "../../stores/reports";
 import UbicacionMapa from './Steppers/UbicacionMapa.vue';
 import CaracteristicasInmueble from './Steppers/CaracteristicasInmueble.vue';
 import DatosPersonales from './Steppers/DatosPersonales.vue';
 import TipoReporte from './Steppers/TipoReporte.vue';
+import { userDatabaseStore } from "../../stores/database";
+import { reportDatabaseStore } from "../../stores/reports";
 import { useRouter, useRoute } from 'vue-router';
+import { provide, ref } from 'vue'
 import { nanoid } from "nanoid";
 
+const useDatabase = userDatabaseStore();
 const useReportDatabase = reportDatabaseStore()
 const router = useRouter();
 const route = useRoute();
@@ -76,9 +62,8 @@ const setAddress = (addressSelected) => {
 
 
 const addReport = () => {
-    useReportDatabase.createReport(nanoid(8), date, city.value, addressReport.value)
-    router.push(`${route.matched[0].path}vista-reporte`)
-    console.log(useReportDatabase);
+    useReportDatabase.createReport(nanoid(8), date, city.value, addressReport.value, useDatabase.documents.nickname)
+    router.push(`/${useDatabase.documents.typeUser}/vista-reporte`)
 }
 provide('setcity', { city, setCity })
 provide('setaddress', { addressReport, setAddress })
@@ -87,11 +72,13 @@ provide('setaddress', { addressReport, setAddress })
 
 
 <style lang="scss" scoped>
-.content-step {
-    width: 70%;
-}
-
-.q-stepper__nav {
-    text-align: right;
+.title {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+    color: #282A33;
 }
 </style>

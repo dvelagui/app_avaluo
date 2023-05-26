@@ -7,14 +7,8 @@
         </q-badge>
         <q-tooltip>Notificaciones</q-tooltip>
     </q-btn>
-    <q-btn round flat v-if="userStore.userData">
-        <q-avatar size="26px">
-            <AvatarImage />
-        </q-avatar>
-        <q-tooltip>Cuenta</q-tooltip>
-    </q-btn>
     <q-btn class="btn-access" label="Regresar" href="https://www.avaluoenlinea.com/" v-if="!userStore.userData" />
-    <q-btn label="Salir" color="primary" @click="logOut" v-if="userStore.userData" />
+    <q-btn class="q-mx-lg" label="Salir" color="primary" @click="logOut" v-if="userStore.userData" />
 </template>
 
 <script setup>

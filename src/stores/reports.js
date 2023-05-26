@@ -19,7 +19,13 @@ export const reportDatabaseStore = defineStore("reportdatabase", {
     loadingUser: false,
   }),
   actions: {
-    async createReport(idReport, dateReport, cityReport, addressReport) {
+    async createReport(
+      idReport,
+      dateReport,
+      cityReport,
+      addressReport,
+      nicknameReport
+    ) {
       try {
         const data = {
           idUser: auth.currentUser.uid,
@@ -27,6 +33,7 @@ export const reportDatabaseStore = defineStore("reportdatabase", {
           dateReport: dateReport,
           cityReport: cityReport,
           addressReport: addressReport,
+          nicknameReport: nicknameReport,
         };
         const reportRef = doc(db, "reports", idReport);
         const docSnap = await getDoc(reportRef);

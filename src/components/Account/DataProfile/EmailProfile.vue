@@ -1,13 +1,6 @@
 <template>
-     <section class="row justify-center items-center q-my-xl q-py-md shadow-1">
-        <div class="col">
-            <p>Correo Electronico: </p>
-        </div>
-        <div class="col">
-            <p>{{ userStore.userData?.email }}</p>
-        </div>
-        <div class="col"></div>
-    </section>
+    <label>Correo Electronico</label>
+    <q-input disable readonly outlined :label="userStore.userData?.email" />
 </template>
 
 <script setup>
@@ -20,5 +13,16 @@ const userStore = useUserStore();
 <style lang="scss" scoped>
 p {
     margin: 0;
+}
+
+label {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: -0.01em;
+    color: #6B7082;
+    padding: 12px 0;
 }
 </style>

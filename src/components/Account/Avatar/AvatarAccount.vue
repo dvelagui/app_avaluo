@@ -1,24 +1,35 @@
 <template>
-    <q-card class="my-card">
-        <q-img src="https://firebasestorage.googleapis.com/v0/b/avaluo-en-linea-colombia.appspot.com/o/user-default%2Fcover.png?alt=media&token=4d122d6b-30ca-42a1-acb7-9f010459b17b">
-            <div class="absolute-bottom">
-                <q-item-section avatar>
-                <AvatarImage /> 
-                    <AvatarName />
-                </q-item-section>
+    <div class="row q-pa-xl">
+        <div class="column items-center justify-center text-center">
+            <div class="col avatar-img">
+                <img src="../../../assets/logo_avaluo.svg">
             </div>
-        </q-img>
-
-
-    </q-card>
+            <div class="col q-my-sm">
+                <AvatarImage />
+                <AvatarName />
+                <AvatarEmail />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import AvatarImage from '../Avatar/AvatarImage.vue';
 import AvatarName from '../Avatar/AvatarName.vue';
+import AvatarEmail from './AvatarEmail.vue';
 
 </script>
 
 <style lang="scss" scoped>
+.avatar-img {
+    width: 100%;
+    max-width: 200px;
+}
 
+.q-avatar {
+    width: 100%;
+    height: auto;
+    max-width: 100px;
+    margin-bottom: 12px;
+}
 </style>

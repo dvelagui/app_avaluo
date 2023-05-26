@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md">
+    <div class="q-pa-md container">
         <h2 class="q-mb-xl">Escoge tu reporte</h2>
         <div class="row">
             <div class="col-12 col-md-6 q-pa-sm">
@@ -62,6 +62,12 @@ const report = ref()
 
 </script>
 <style lang="scss" scoped>
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
 h2 {
     font-family: 'Source Sans Pro';
     font-style: normal;

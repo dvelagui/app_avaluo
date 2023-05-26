@@ -1,21 +1,18 @@
 <template>
-    <div class="row justify-center text-center bg-white">
-        <q-splitter class="col-12 col-md-8 shadow-16 q-mt-xl" v-model="splitterModel" style="height: auto;">
-
-            <template v-slot:before>
-                <q-tabs v-model="tab" vertical class="text-left tabs-avaluo">
-                    <q-tab name="profile" icon="mdi-account-circle" label="Perfil" />
-                    <q-tab name="plan" icon="mdi-all-inclusive" label="Planes" />
-                    <q-tab name="invoices" icon="mdi-badge-account-horizontal" label="Facturación" />
-                </q-tabs>
-            </template>
-            <AccountPanel />
-        </q-splitter>
+    <div class="q-pa-xl column items-start justify-start">
+        <h4 class="title text-center">Datos Personales</h4>
+        <p class="subtitle q-mt-md">Estas afiliado a la empresa ...</p>
     </div>
+    <AccountProfile />
+    <div class="q-px-xl column items-start justify-start">
+        <h4 class="title text-center">Datos del contacto</h4>
+    </div>
+    <AccountProfileAdmin />
 </template>
   
 <script setup>
-import AccountPanel from 'src/components/Account/AccountPanel.vue';
+import AccountProfile from 'src/components/Account/AccountProfile.vue';
+import AccountProfileAdmin from 'src/components/Account/AccountProfileAdmin.vue';
 import { provide, ref } from 'vue';
 
 const tab = ref('profile');
@@ -27,6 +24,26 @@ provide('tab', tab);
 <style lang="scss" scoped>
 .tabs-avaluo {
     color: $primary;
+}
+
+.title {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+    color: #282A33;
+}
+
+.subtitle {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: -0.01em;
+    color: #6B7082;
 }
 </style>
   
