@@ -4,19 +4,23 @@
         <p class="subtitle q-mt-md">Estas afiliado a la empresa ...</p>
     </div>
     <AccountProfile />
-    <div class="q-px-xl column items-start justify-start">
+    <div v-if="admin" class="q-px-xl column items-start justify-start">
         <h4 class="title text-center">Datos del contacto</h4>
     </div>
-    <AccountProfileAdmin />
+    <AccountProfileAdmin v-if="admin" />
 </template>
   
 <script setup>
 import AccountProfile from 'src/components/Account/AccountProfile.vue';
 import AccountProfileAdmin from 'src/components/Account/AccountProfileAdmin.vue';
+import { userDatabaseStore } from "../stores/database";
 import { provide, ref } from 'vue';
 
+const useDatabase = userDatabaseStore();
 const tab = ref('profile');
 const splitterModel = ref(30);
+const admin = ref(useDatabase.documents?.rol != 'agente' && useDatabase.documents?.typeUser === 'empresas')
+
 
 provide('tab', tab);
 </script>

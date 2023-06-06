@@ -15,6 +15,7 @@ const useDataBase = userDatabaseStore();
 const router = useRouter();
 const route = useRoute();
 const usertype = ref('');
+const userPlan = ref('free');
 const { userRegistered, changeUserRegistered } = inject('type');
 
 
@@ -42,7 +43,7 @@ const accessGoogle = async () => {
                 messageColor: 'white'
             }
         )
-        await userStore.registerGoogle(usertype.value._value);
+        await userStore.registerGoogle(usertype.value._value, userPlan.value);
         router.push('/' + useDataBase.documents.typeUser + redirectPath.value)
         $q.loading.hide()
     }

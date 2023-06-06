@@ -24,21 +24,20 @@
                     </q-tab-panel>
 
                     <q-tab-panel name="facturacion">
-                        <div class="text-h6">Alarms</div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        <SuscripcionAdmin />
                     </q-tab-panel>
 
                     <q-tab-panel name="suscripcion">
-                        <div class="text-h6">Movies</div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        <SuscripcionAdmin />
+
                     </q-tab-panel>
                     <q-tab-panel name="personalizacion">
-                        <div class="text-h6">Movies</div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        <div class="text-h6">Personalización</div>
+                        Contenido
                     </q-tab-panel>
                     <q-tab-panel name="estadisticas">
-                        <div class="text-h6">Movies</div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        <div class="text-h6">Estadisticas</div>
+                        Contenido
                     </q-tab-panel>
                 </q-tab-panels>
             </q-card>
@@ -49,6 +48,7 @@
 </template>
   
 <script setup>
+import SuscripcionAdmin from 'src/components/Admin/SuscripcionAdmin.vue';
 import UsuariosAdmin from 'src/components/Admin/UsuariosAdmin.vue';
 import { ref } from 'vue'
 

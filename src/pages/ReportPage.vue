@@ -28,6 +28,7 @@
                     </div>
                 </div>
 
+
                 <q-markup-table>
                     <thead>
                         <tr>
@@ -38,6 +39,13 @@
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
+                    <tbody v-if="admin">
+                        <tr v-for="report in useReportDatabase.documentsAdmin" :key="report.idReport">
+                            <ReportList :dateReport="report.dateReport" :city-report="report.cityReport"
+                                :address-report="report.addressReport" :user-report="report.nicknameReport"
+                                :id-report="report.idReport" />
+                        </tr>
+                    </tbody>
                     <tbody>
                         <tr v-for="report in useReportDatabase.documents" :key="report.idReport">
                             <ReportList :dateReport="report.dateReport" :city-report="report.cityReport"
@@ -45,6 +53,7 @@
                                 :id-report="report.idReport" />
                         </tr>
                     </tbody>
+
                 </q-markup-table>
             </q-card>
         </div>
@@ -59,7 +68,8 @@ import ReportList from 'src/components/Reports/ReportList.vue';
 import { userDatabaseStore } from "../stores/database";
 import { reportDatabaseStore } from "../stores/reports";
 import { useRouter, useRoute } from 'vue-router';
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { auth } from 'src/firebaseConfig';
 
 const useDataBase = userDatabaseStore();
 const router = useRouter();
@@ -68,6 +78,17 @@ const current = ref(1)
 const date = ref('2023/05/19')
 const useReportDatabase = reportDatabaseStore()
 useReportDatabase.getDataReports();
+const admin = ref("")
+const filter = ref('')
+onMounted(async () => {
+    await useReportDatabase.getDataReportsAdmin()
+    admin.value = useReportDatabase.documentsAdmin[0]?.idAdmin === auth.currentUser.uid ? true : false
+})
+
+
+
+
+
 
 </script>
 
@@ -82,11 +103,13 @@ useReportDatabase.getDataReports();
     color: #282A33;
 }
 
-.q-table thead {
+.q-table thead,
+.table-reports {
     background: #F7F9FD;
 }
 
-.q-table thead th {
+.q-table thead th,
+.table-title {
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 600;

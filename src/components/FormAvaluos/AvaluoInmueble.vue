@@ -62,7 +62,7 @@ const setAddress = (addressSelected) => {
 
 
 const addReport = () => {
-    useReportDatabase.createReport(nanoid(8), date, city.value, addressReport.value, useDatabase.documents.nickname)
+    useReportDatabase.createReport(nanoid(8), date, city.value, addressReport.value, useDatabase.documents.nickname, useDatabase.documents.admin)
     router.push(`/${useDatabase.documents.typeUser}/vista-reporte`)
 }
 provide('setcity', { city, setCity })

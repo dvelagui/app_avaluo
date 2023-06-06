@@ -16,6 +16,7 @@ import { auth, db } from "../firebaseConfig";
 export const reportDatabaseStore = defineStore("reportdatabase", {
   state: () => ({
     documents: [],
+    documentsAdmin: [],
     loadingUser: false,
   }),
   actions: {
@@ -24,7 +25,8 @@ export const reportDatabaseStore = defineStore("reportdatabase", {
       dateReport,
       cityReport,
       addressReport,
-      nicknameReport
+      nicknameReport,
+      adminReport
     ) {
       try {
         const data = {
@@ -34,6 +36,7 @@ export const reportDatabaseStore = defineStore("reportdatabase", {
           cityReport: cityReport,
           addressReport: addressReport,
           nicknameReport: nicknameReport,
+          idAdmin: adminReport,
         };
         const reportRef = doc(db, "reports", idReport);
         const docSnap = await getDoc(reportRef);
@@ -61,6 +64,27 @@ export const reportDatabaseStore = defineStore("reportdatabase", {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           this.documents.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+      } catch (error) {}
+    },
+    async getDataReportsAdmin() {
+      if (this.documentsAdmin.length !== 0) {
+        return;
+      }
+      try {
+        const reportsRef = collection(db, "reports");
+
+        const q = query(
+          reportsRef,
+          where("idAdmin", "==", auth.currentUser.uid)
+        );
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          this.documentsAdmin.push({
             id: doc.id,
             ...doc.data(),
           });

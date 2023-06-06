@@ -18,7 +18,8 @@ const useDataBase = userDatabaseStore()
 
 const cargarDatos = async () => {
   if (auth.currentUser) {
-    await useDataBase.getUserData()
+    await useDataBase.getUserData(auth.currentUser.uid);
+    await useDataBase.getUserDataAgent();
   }
 }
 cargarDatos()

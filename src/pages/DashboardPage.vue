@@ -11,8 +11,8 @@
             homeText="Pide tu avalúo certificado fácil y rápido." homeUrl="/avaluo-certificado" homeBtn="Solicitar ahora" />
         <CardsHome homeImg="fa-solid fa-file-lines" homeTitle="Historial de reportes"
             homeText="Consulta  y descarga tus reportes mensuales." homeUrl="/reportes" homeBtn="Ver historial" />
-        <CardsHome homeImg="fa-solid fa-gear" homeTitle="Administración" homeText="Gestiona tus usuarios y suscripciones."
-            homeUrl="/administracion" homeBtn="Ver administración" />
+        <CardsHome v-if="admin" homeImg="fa-solid fa-gear" homeTitle="Administración"
+            homeText="Gestiona tus usuarios y suscripciones." homeUrl="/administracion" homeBtn="Ver administración" />
         <CardsHome homeImg="fa-solid fa-user" homeTitle="Datos personales"
             homeText="Actualiza tu información cuando lo necesites." homeUrl="/mi-cuenta" homeBtn="Ver perfil" />
 
@@ -23,10 +23,13 @@
 import CardsHome from "../components/Home/CardsHome.vue";
 import { userDatabaseStore } from "../stores/database";
 import { useRouter, useRoute } from 'vue-router';
+import { ref } from "vue";
 
 const useDatabase = userDatabaseStore();
 const router = useRouter();
 const route = useRoute();
+const admin = ref(useDatabase.documents?.rol != 'agente' && useDatabase.documents?.typeUser === 'empresas')
+
 
 </script>
 

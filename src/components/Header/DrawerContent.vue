@@ -1,8 +1,8 @@
 <template>
-  <div class="column justify-between items-center">
+  <div v-ripple="true" class="column justify-between items-center">
     <q-list>
       <AvatarAccount />
-      <q-item class="q-mt-md" clickable @click="router.push(useDataBase.documents.typeUser)">
+      <q-item :disable="plan" class="q-mt-md" clickable @click="router.push(useDataBase.documents.typeUser)">
         <q-item-section avatar>
           <q-icon name="fa-sharp fa-solid fa-house" />
         </q-item-section>
@@ -10,7 +10,7 @@
           <q-item-label>Inicio</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="router.push(`/${useDataBase.documents.typeUser}/mi-cuenta`)">
+      <q-item :disable="plan" clickable @click="router.push(`/${useDataBase.documents.typeUser}/mi-cuenta`)">
         <q-item-section avatar>
           <q-icon name="fa-solid fa-user" />
         </q-item-section>
@@ -18,7 +18,7 @@
           <q-item-label>Perfil</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="router.push(`/${useDataBase.documents.typeUser}/reportes`)">
+      <q-item :disable="plan" clickable @click="router.push(`/${useDataBase.documents.typeUser}/reportes`)">
         <q-item-section avatar>
           <q-icon name="fa-solid fa-file-lines" />
         </q-item-section>
@@ -26,7 +26,7 @@
           <q-item-label>Reportes</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="router.push(`/${useDataBase.documents.typeUser}/avaluo-certificado`)">
+      <q-item :disable="plan" clickable @click="router.push(`/${useDataBase.documents.typeUser}/avaluo-certificado`)">
         <q-item-section avatar>
           <q-icon name="fa-solid fa-file-pen" />
         </q-item-section>
@@ -34,7 +34,8 @@
           <q-item-label>Avalúo certificado</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable @click="router.push(`/${useDataBase.documents.typeUser}/administracion`)">
+      <q-item v-if="useDataBase.documents?.rol != 'agente' && useDataBase.documents?.typeUser === 'empresas'"
+        :disable="plan" clickable @click="router.push(`/${useDataBase.documents.typeUser}/administracion`)">
         <q-item-section avatar>
           <q-icon name="fa-solid fa-gear" />
         </q-item-section>
@@ -56,17 +57,19 @@ import AvatarAccount from '../Account/Avatar/AvatarAccount.vue';
 import { userDatabaseStore } from "../../stores/database";
 import { useUserStore } from 'src/stores/users';
 import { useRouter } from 'vue-router';
+import { ref, watch } from "vue";
 
 const useDataBase = userDatabaseStore();
 const userStore = useUserStore();
 const router = useRouter();
+const plan = ref(useDataBase.documents?.plan === 'free' && useDataBase.documents?.typeUser === 'empresas');
+
+
 
 const logOut = () => {
   userStore.logOutSesion();
   router.push('/inicio-sesion');
 }
-
-
 
 
 </script>

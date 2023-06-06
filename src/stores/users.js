@@ -16,7 +16,7 @@ export const useUserStore = defineStore("userData", {
     loadingUser: false,
   }),
   actions: {
-    async createUser(nickname, typeUser, email, password) {
+    async createUser(nickname, typeUser, plan, email, password) {
       this.loadingUser = true;
       try {
         const { user } = await createUserWithEmailAndPassword(
@@ -29,11 +29,15 @@ export const useUserStore = defineStore("userData", {
           uid: user.uid,
         };
         const useDataBase = userDatabaseStore();
+        const avatar =
+          "https://firebasestorage.googleapis.com/v0/b/avaluo-en-linea-colombia.appspot.com/o/user-default%2Fprofile-default.png?alt=media&token=88dc6558-2399-4416-8710-3489531fb39d";
         useDataBase.createUserData(
           this.userData.email,
           this.userData.uid,
           nickname,
-          typeUser
+          typeUser,
+          avatar,
+          plan
         );
         await useDataBase.getUserData();
       } catch (error) {
@@ -42,7 +46,7 @@ export const useUserStore = defineStore("userData", {
         this.loadingUser = false;
       }
     },
-    async registerGoogle(usertype) {
+    async registerGoogle(usertype, plan) {
       this.loadingUser = true;
       const useDataBase = userDatabaseStore();
       try {
@@ -56,11 +60,14 @@ export const useUserStore = defineStore("userData", {
             this.userData.email,
             this.userData.uid,
             signWithGoogle.user.displayName,
-            usertype
+            usertype,
+            signWithGoogle.user.photoURL,
+            plan
           );
           await useDataBase.getUserData();
         } else {
           await useDataBase.getUserData();
+          console.log(signWithGoogle.user.photoURL);
         }
       } catch (error) {
         console.log(error);

@@ -29,6 +29,7 @@
 import FormLogin from 'src/components/Login/FormLogin.vue';
 import { useUserStore } from "../stores/users";
 import { userDatabaseStore } from "../stores/database";
+import { auth } from 'src/firebaseConfig';
 import { useRouter, useRoute } from 'vue-router';
 import { provide, ref, watch } from 'vue';
 
@@ -39,10 +40,13 @@ const router = useRouter();
 const route = useRoute();
 const usertype = ref('');
 const userRegistered = ref('personas');
+const userPlan = ref('free');
 const redirectPath = ref(route.query.redirect || '/');
 
+
+
+
 const defineUSer = () => {
-  console.log(userRegistered.value);
   usertype.value = ref(route.matched[0].path != '/' ? route.matched[0].path.split('/')[1] : userRegistered.value)
 }
 
@@ -52,10 +56,8 @@ const changeUserRegistered = (usertype) => {
 
 watch(userDataInput, async () => {
   defineUSer();
-  console.log(usertype.value._value);
-  const userRegister = ({ ...userDataInput.value })
-  await userStore.createUser(userRegister.nickname, usertype.value._value, userRegister.email, userRegister.password);
-  router.push('/' + useDataBase.documents.typeUser + redirectPath.value);
+  await userStore.createUser(userDataInput.value.nickname, usertype.value._value, userPlan.value, userDataInput.value.email, userDataInput.value.password);
+  router.push('/' + usertype.value._value + redirectPath.value);
 })
 
 provide('type', { userRegistered, changeUserRegistered })

@@ -7,8 +7,10 @@ const requireAuthEmpresas = async (to, from, next) => {
   const useDataBase = userDatabaseStore();
   const user = await userStore.currentUser();
   if (user) {
-    const userPath = await useDataBase.getUserData();
-    if (useDataBase.documents.typeUser === "empresas") {
+    const userPath = await useDataBase.getUserData(user.uid);
+    if (useDataBase.documents.plan === "free") {
+      next("/empresas/planes");
+    } else if (useDataBase.documents.typeUser === "empresas") {
       next();
     } else {
       next("/");
@@ -22,7 +24,7 @@ const requireAuthPersonas = async (to, from, next) => {
   const useDataBase = userDatabaseStore();
   const user = await userStore.currentUser();
   if (user) {
-    const userPath = await useDataBase.getUserData();
+    const userPath = await useDataBase.getUserData(user.uid);
     if (useDataBase.documents.typeUser === "personas") {
       next();
     } else {
@@ -37,7 +39,7 @@ const userPathHome = async (to, from, next) => {
   const useDataBase = userDatabaseStore();
   const user = await userStore.currentUser();
   if (user) {
-    const userPath = await useDataBase.getUserData();
+    const userPath = await useDataBase.getUserData(user.uid);
     next(`/${useDataBase.documents.typeUser}`);
   } else {
     next("/inicio-sesion");
@@ -119,6 +121,15 @@ const routes = [
         path: "registro",
         component: () => import("../pages/RegisterPage.vue"),
         beforeEnter: userIsAuthenticated,
+      },
+      {
+        path: "registro-asesor/finishSignUp",
+        component: () => import("../pages/RegisterLinkPage.vue"),
+        beforeEnter: userIsAuthenticated,
+      },
+      {
+        path: "planes",
+        component: () => import("../pages/PricingPage.vue"),
       },
       {
         path: "avaluo-inmueble",

@@ -1,13 +1,13 @@
 <template>
-    <td class="text-left">{{ idReport }}</td>
-    <td class="text-left">{{ cityReport }}</td>
-    <td class="text-left">{{ addressReport }}</td>
-    <td class="text-left">{{ userReport }}</td>
-    <td class="text-left">{{ addressReport }}</td>
-    <td :class="userReport === 'Daniel Velazqez' ? 'accept' : 'pending'" class="text-left">{{ userReport }}</td>
+    <td class="text-left">{{ id.slice(0, 8) }}</td>
+    <td class="text-left">{{ date }}</td>
+    <td class="text-left">{{ name }}</td>
+    <td class="text-left">{{ email }}</td>
+    <td class="text-left">{{ phone }}</td>
+    <td :class="id != '1' ? 'accept' : 'pending'" class="text-left">{{ status }}</td>
     <td class="text-right">
         <div class="d-flex justify-center align-center">
-            <a @click="router.push(`/${useDatabase.documents.typeUser}/vista-reporte`)" class="btn-actions"
+            <a @click="router.push(`/${useDatabase.documentsAgent.typeUser}/vista-reporte`)" class="btn-actions"
                 color="primary">Eliminar<q-icon class="q-mr-lg q-ml-xs" name="fa-solid fa-trash" /></a>
 
         </div>
@@ -18,20 +18,24 @@
 
 import { userDatabaseStore } from "../../stores/database";
 import { useRouter } from 'vue-router';
-import { toRefs } from 'vue';
+import { toRefs, ref } from 'vue';
 
 const useDataBase = userDatabaseStore();
 const router = useRouter();
 
 const props = defineProps({
-    dateReport: String,
-    cityReport: String,
-    addressReport: String,
-    userReport: String,
-    idReport: String,
+    date: String,
+    name: String,
+    email: String,
+    phone: String,
+    id: String,
 })
 
-const { dateReport, cityReport, addressReport, idReport, userReport } = toRefs(props)
+const { date, name, email, phone, id } = toRefs(props)
+
+console.log(date.value);
+
+const status = ref(id.value != '1' ? 'Confirmado' : "Pendiente")
 
 </script>
 
@@ -72,5 +76,14 @@ const { dateReport, cityReport, addressReport, idReport, userReport } = toRefs(p
 
 a {
     cursor: pointer;
+}
+
+.accept {
+    color: $positive;
+}
+
+.pending {
+    color: $negative;
+
 }
 </style>
