@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md container">
+  <div class="container">
     <h2>Ubica el inmueble</h2>
     <p class="q-mt-md">Digita la dirección del inmueble, revisa el punto de ubicación en el mapa y continua con el
       reporte.
@@ -7,36 +7,33 @@
       dirección exacta, ubica el punto directamente en el mapa.</p>
 
     <div class="row">
-      <div class="col-6 q-pa-sm">
+      <div class="col-12 col-md-6 q-pa-sm">
         <label>Departamento:</label>
         <q-select outlined v-model="selectedDepartment" @update:model-value="getCities" :options="departaments"
           label="Selecciona..." />
       </div>
-      <div class="col-6 q-pa-sm">
+      <div class="col-12 col-md-6 q-pa-sm">
         <label>Ciudad:</label>
         <q-select outlined v-model="selectedCity" @update:model-value="getAddress" :options="cities"
           label="Selecciona..." />
       </div>
     </div>
     <div class="row justify-between items-end content-end ">
-      <div class="col-4 q-pa-sm">
+      <div class="col-12 col-md-4 q-pa-sm">
         <label>Dirección:</label>
         <q-select outlined v-model="address1" @update:model-value="getStreet" :options="streetOptions"
           label="Selecciona..." />
       </div>
-      <div class="col-2 q-pa-sm">
+      <div class="col-3 col-md-2 q-pa-sm">
         <q-input outlined v-model="address2" label="Ej: 98 A" />
       </div>
-      <div class="col-auto q-pa-sm q-mb-md">
+      <div class="col-1 q-pa-sm q-mb-md">
         <span>#</span>
       </div>
-      <div class="col-2 q-pa-sm">
+      <div class="col-4 col-md-2 q-pa-sm">
         <q-input outlined v-model="address3" label="Ej: 45" />
       </div>
-      <div class="col-auto q-pa-sm q-mb-md">
-        <span>-</span>
-      </div>
-      <div class="col-2 q-pa-sm">
+      <div class="col-4 col-md-2 q-pa-sm">
         <q-input outlined v-model="address4" label="Ej: 18 Este" />
       </div>
     </div>
@@ -51,21 +48,14 @@
       <q-btn color="primary" class="q-pa-sm" icon="mdi-google-maps" @click="getCoordinates">Ubicar en el mapa</q-btn>
 
     </div>
-    <div class="q-mt-md">
-      <label>Latitud:</label>
-      <input type="text" :value="latitude" readonly />
-    </div>
-    <div>
-      <label>Longitud:</label>
-      <input type="text" :value="longitude" readonly />
-    </div>
-    <div>
-
+    <div id="maps">
+      <GoogleMaps :latMap="latitude" :lngMap="longitude" :zoomMap="zoom" />
     </div>
   </div>
 </template>
 
 <script setup>
+import GoogleMaps from "../../Maps/GoogleMaps.vue";
 import departaments from "../../../data/departaments.json";
 import streetOptions from "../../../data/streetOptions.json";
 import { ref, inject } from "vue";
@@ -83,10 +73,18 @@ const address3 = ref("");
 const address4 = ref("");
 const address5 = ref("");
 const addressComplete = ref("");
-const latitude = ref(0);
-const longitude = ref(0);
+const latitude = ref(4.71098859);
+const longitude = ref(-74.072092);
+const locality = ref();
+const formattedAddress = ref("calle 2");
+const zoom = ref(12);
 const { city, setCity } = inject('setcity');
-const { addressReport, setAddress } = inject('setaddress');
+const { direccion, setAddress } = inject('setaddress');
+const { direccion_formato, setDireccion_formato } = inject('setdireccion_formato');
+const { dpto_ccdgo, setDpto_ccdgo } = inject('setdpto_ccdgo');
+const { mpio_ccdgo, setMpio_ccdgo } = inject('setmpio_ccdgo');
+const { latitud, setLatitud } = inject('setlatitud');
+const { longitud, setLongitud } = inject('setlongitud');
 
 
 
@@ -98,18 +96,19 @@ const getLocation = async (address) => {
   const data = await response.json();
   latitude.value = data.results[0].geometry.location.lat;
   longitude.value = data.results[0].geometry.location.lng;
-
-  console.log(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDE3YLDQ6nKhdoWiykBIpJP3xZRr4j19Ak`);
+  locality.value = data.results[0].address_components[2].long_name
+  formattedAddress.value = data.results[0].formatted_address
+  setLatitud(latitude.value);
+  setLongitud(longitude.value);
+  setDireccion_formato(formattedAddress.value);
 };
 
 const getCities = async () => {
   const response = await fetch(
     `https://www.datos.gov.co/resource/xdk5-pm3f.json?c_digo_dane_del_departamento=${selectedDepartment.value.value}`
   );
+  setDpto_ccdgo(selectedDepartment.value.value)
   const citiesOptions = await response.json();
-
-  console.log(citiesOptions);
-
   citiesOptions.forEach((city) => {
     cities.value.push(
       {
@@ -129,6 +128,7 @@ const getAddress = async () => {
     selectedCityData.value.label + "+" + selectedCityData.value.departament;
   getLocation(addressSelectedCity.value)
   setCity(selectedCityData.value.label);
+  setMpio_ccdgo(selectedCityData.value.value.replace(".", ""));
 };
 
 const getStreet = () => {
@@ -136,31 +136,15 @@ const getStreet = () => {
 }
 
 const getCoordinates = () => {
-
+  zoom.value = 17
   address.value += `+${address2.value}+%23+${address3.value}+-+${address4.value}`
-
   addressComplete.value = `"${address.value}+${addressSelectedCity.value}+colombia"`
-
+  console.log(addressComplete.value);
   getLocation(addressComplete.value);
-
   const setAdrressComplete = `${address1.value.label} ${address2.value} # ${address3.value} - ${address4.value}, ${address5.value}`
-
   setAddress(setAdrressComplete)
 
-
 };
-
-/* const initMap = () => {
-  // Map
-  const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: latitude.value, lng: longitude.value },
-    zoom: 8,
-  });
-  const marker = new google.maps.Marker({
-    position: { lat: latitude.value, lng: longitude.value },
-    map: map,
-  });
-} */
 
 </script>
 <style lang="scss" scoped>

@@ -6,7 +6,7 @@
         <div class="col-12">
             <q-card class=" my-card" flat bordered>
                 <div class="row items-center justify-between">
-                    <div class="col-4 q-pa-lg">
+                    <div class="col-6 col-md-4 q-pa-xs q-pa-md-lg">
                         <label for="event">Filtrar por fecha:</label>
                         <q-input class="q-mt-md" filled v-model="date" mask="date" :rules="['date']">
                             <template v-slot:append>
@@ -22,7 +22,7 @@
                             </template>
                         </q-input>
                     </div>
-                    <div class="col-3 q-pa-lg text-right">
+                    <div class="col-6 col-md-3 q-pa-xs q-pa-md-lg text-right">
                         <q-btn @click="router.push(`/${useDataBase.documents.typeUser}/avaluo-inmueble`)" color="primary"
                             label="Genera Reporte" />
                     </div>

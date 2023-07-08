@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md container">
+    <div class="container">
         <h2 class="q-mb-xl">Escoge tu reporte</h2>
         <div class="row">
             <div class="col-12 col-md-6 q-pa-sm">

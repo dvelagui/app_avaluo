@@ -1,7 +1,7 @@
 <template>
-    <div class="q-pl-xl">
+    <div class="q-pa-sm q-pl-md-xl">
         <div class="row items-center justify-start q-mb-xl">
-            <div class="col-12 col-md-1">
+            <div class="col-12 col-md-1 q-pa-md text-center">
                 <AvatarImage style="width: 120px; height: 120px;" />
             </div>
             <div class="col-12 col-md-4">

@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pl-xl">
+    <div class="q-pa-sm q-pl-md-xl">
         <div class="row items-center justify-start q-my-xl">
             <div class="col-12 col-md-4 q-px-md">
                 <NameProfile />

@@ -3,7 +3,7 @@
     <div class="col-12 col-md-4">
       <img class="img-login" alt="Avaluo En Linea" src="../assets/img_login.png">
     </div>
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8 q-px-lg q-px-md-sm">
       <div class="row justify-center items-start">
         <section class="col-12 col-md-6 self-center">
           <div class="text-center q-mb-xl">
@@ -137,6 +137,13 @@ provide('type', { userRegistered, changeUserRegistered })
 
 .img-login {
   height: 100vh;
+}
+
+@media (max-width: 992px) {
+  .img-login {
+    display: none;
+  }
+
 }
 </style>
 

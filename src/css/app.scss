@@ -73,3 +73,9 @@
   line-height: 18px;
   color: #6b7082;
 }
+
+@media (max-width: 992px) {
+  .q-stepper__step-inner {
+    padding: 0px;
+  }
+}

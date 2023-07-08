@@ -3,9 +3,9 @@
     <div class="col-12 col-md-4">
       <img class="img-login" alt="Avaluo En Linea" src="../assets/img_login.png">
     </div>
-    <div class="col-8">
+    <div class="col-12 col-md-8 q-px-lg q-px-md-sm">
       <div class="row justify-center items-start">
-        <section class="col-6  self-center">
+        <section class="col-12 col-md-6 self-center">
           <div class="text-center q-mb-xl">
             <a href="https://www.avaluoenlinea.com/" target="_blank">
               <img class="img-logo" alt="Avaluo En Linea" src="../assets/logo_avaluo.svg" />
@@ -29,10 +29,11 @@
 import FormLogin from 'src/components/Login/FormLogin.vue';
 import { useUserStore } from "../stores/users";
 import { userDatabaseStore } from "../stores/database";
-import { auth } from 'src/firebaseConfig';
 import { useRouter, useRoute } from 'vue-router';
 import { provide, ref, watch } from 'vue';
+import { QSpinnerPuff, useQuasar } from 'quasar'
 
+const $q = useQuasar();
 const userDataInput = ref({});
 const userStore = useUserStore();
 const useDataBase = userDatabaseStore();
@@ -56,8 +57,23 @@ const changeUserRegistered = (usertype) => {
 
 watch(userDataInput, async () => {
   defineUSer();
-  await userStore.createUser(userDataInput.value.nickname, usertype.value._value, userPlan.value, userDataInput.value.email, userDataInput.value.password);
-  router.push('/' + usertype.value._value + redirectPath.value);
+  if (!userStore.loadingUser) {
+    defineUSer();
+    $q.loading.show(
+      {
+        spinner: QSpinnerPuff,
+        spinnerColor: 'primary',
+        spinnerSize: 250,
+        backgroundColor: 'black',
+        message: 'Autenticando Usuario en Avalúo En Línea',
+        messageColor: 'white'
+      }
+    )
+    await userStore.createUser(userDataInput.value.nickname, usertype.value._value, userPlan.value, userDataInput.value.email, userDataInput.value.password);
+    router.push('/' + usertype.value._value + redirectPath.value);
+    $q.loading.hide()
+  }
+
 })
 
 provide('type', { userRegistered, changeUserRegistered })
@@ -87,6 +103,13 @@ provide('type', { userRegistered, changeUserRegistered })
 
 .img-login {
   height: 100vh;
+}
+
+@media (max-width: 992px) {
+  .img-login {
+    display: none;
+  }
+
 }
 </style>
 

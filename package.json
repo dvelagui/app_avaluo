@@ -14,6 +14,7 @@
     "build:pwa": "quasar build -m pwa"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.79",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "firebase": "^9.21.0",

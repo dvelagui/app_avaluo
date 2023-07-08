@@ -82,7 +82,7 @@ useDataBase.getUserDataAgent()
 
 const onSubmit = () => {
     const actionCodeSettings = {
-        url: `http://localhost:9000/empresas/registro-asesor/finishSignUp?&name=${name.value}&email=${email.value}`,
+        url: `https://avaluo-en-linea-colombia.web.app/empresas/registro-asesor/finishSignUp?&name=${name.value}&email=${email.value}`,
         // This must be true.
         handleCodeInApp: true,
     };

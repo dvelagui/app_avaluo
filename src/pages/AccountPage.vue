@@ -5,7 +5,7 @@
     </div>
     <AccountProfile />
     <div v-if="admin" class="q-px-xl column items-start justify-start">
-        <h4 class="title text-center">Datos del contacto</h4>
+        <h4 class="title text-center">Datos de la compañia</h4>
     </div>
     <AccountProfileAdmin v-if="admin" />
 </template>
