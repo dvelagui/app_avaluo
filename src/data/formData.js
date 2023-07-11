@@ -18,4 +18,6 @@ const numerodepisos = [
 
 const numerodeniveles = [1, 2, 3, 4, 5];
 
-export { tipos, estratos, numerodepisos, numerodeniveles };
+const tipoNegocio = ["Vender", "Comprar", "Arrendar"];
+
+export { tipos, estratos, numerodepisos, numerodeniveles, tipoNegocio };

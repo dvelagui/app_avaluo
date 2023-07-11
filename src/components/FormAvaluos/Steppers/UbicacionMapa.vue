@@ -56,10 +56,12 @@
 
 <script setup>
 import GoogleMaps from "../../Maps/GoogleMaps.vue";
+import { userFormAvaluoStore } from "../../../stores/FormAvaluo";
 import departaments from "../../../data/departaments.json";
 import streetOptions from "../../../data/streetOptions.json";
-import { ref, inject } from "vue";
+import { ref } from "vue";
 
+const useFormAvaluo = userFormAvaluoStore()
 const GOOGLE_MAPS_API_KEY = "AIzaSyDE3YLDQ6nKhdoWiykBIpJP3xZRr4j19Ak"
 const selectedDepartment = ref("");
 const cities = ref([]);
@@ -73,20 +75,14 @@ const address3 = ref("");
 const address4 = ref("");
 const address5 = ref("");
 const addressComplete = ref("");
+const setAdrressComplete = ref();
 const latitude = ref(4.71098859);
 const longitude = ref(-74.072092);
 const locality = ref();
 const formattedAddress = ref("calle 2");
 const zoom = ref(12);
-const { city, setCity } = inject('setcity');
-const { direccion, setAddress } = inject('setaddress');
-const { direccion_formato, setDireccion_formato } = inject('setdireccion_formato');
-const { dpto_ccdgo, setDpto_ccdgo } = inject('setdpto_ccdgo');
-const { mpio_ccdgo, setMpio_ccdgo } = inject('setmpio_ccdgo');
-const { latitud, setLatitud } = inject('setlatitud');
-const { longitud, setLongitud } = inject('setlongitud');
 
-
+console.log(useFormAvaluo.documents);
 
 const getLocation = async (address) => {
   cities.value = [];
@@ -96,18 +92,14 @@ const getLocation = async (address) => {
   const data = await response.json();
   latitude.value = data.results[0].geometry.location.lat;
   longitude.value = data.results[0].geometry.location.lng;
-  locality.value = data.results[0].address_components[2].long_name
+  //locality.value = data.results[0].address_components[2].long_name
   formattedAddress.value = data.results[0].formatted_address
-  setLatitud(latitude.value);
-  setLongitud(longitude.value);
-  setDireccion_formato(formattedAddress.value);
 };
 
 const getCities = async () => {
   const response = await fetch(
     `https://www.datos.gov.co/resource/xdk5-pm3f.json?c_digo_dane_del_departamento=${selectedDepartment.value.value}`
   );
-  setDpto_ccdgo(selectedDepartment.value.value)
   const citiesOptions = await response.json();
   citiesOptions.forEach((city) => {
     cities.value.push(
@@ -127,8 +119,6 @@ const getAddress = async () => {
   addressSelectedCity.value =
     selectedCityData.value.label + "+" + selectedCityData.value.departament;
   getLocation(addressSelectedCity.value)
-  setCity(selectedCityData.value.label);
-  setMpio_ccdgo(selectedCityData.value.value.replace(".", ""));
 };
 
 const getStreet = () => {
@@ -141,10 +131,16 @@ const getCoordinates = () => {
   addressComplete.value = `"${address.value}+${addressSelectedCity.value}+colombia"`
   console.log(addressComplete.value);
   getLocation(addressComplete.value);
-  const setAdrressComplete = `${address1.value.label} ${address2.value} # ${address3.value} - ${address4.value}, ${address5.value}`
-  setAddress(setAdrressComplete)
+  setAdrressComplete.value = `${address1.value.label} ${address2.value} # ${address3.value} - ${address4.value}, ${address5.value}`
+
 
 };
+
+const updateStepOne = () => {
+  useFormAvaluo.stepOne(setAdrressComplete.value, formattedAddress.value, selectedDepartment.value.value, selectedCityData.value.value.replace(".", ""), latitude.value, longitude.value);
+}
+
+defineExpose({ updateStepOne })
 
 </script>
 <style lang="scss" scoped>
@@ -176,3 +172,4 @@ p {
   color: #6B7082;
 }
 </style>
+

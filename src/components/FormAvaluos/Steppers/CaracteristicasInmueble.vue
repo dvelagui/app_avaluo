@@ -4,8 +4,7 @@
     <div class="row">
       <div class="col-12 col-md-6 q-pa-sm">
         <label>Tipo de inmueble</label>
-        <q-select outlined v-model="tipo" :options="tipos" @update:model-value="setTipoinmueble(tipo)"
-          label="Selecciona..." />
+        <q-select outlined v-model="tipo" :options="tipos" label="Selecciona..." />
       </div>
     </div>
     <div class="row">
@@ -31,21 +30,21 @@
     <div class="row">
       <div class="col-6 q-pa-sm">
         <label>Habitaciones</label>
-        <counter-avaluo />
+        <counter-avaluo count="Hab" />
       </div>
       <div class="col-6 q-pa-sm">
         <label>Baños</label>
-        <counter-avaluo />
+        <counter-avaluo count="Banos" />
       </div>
     </div>
     <div class="row">
       <div class="col-6 q-pa-sm">
         <label>Garajes</label>
-        <counter-avaluo />
+        <counter-avaluo count="Garajes" />
       </div>
       <div class="col-6 q-pa-sm">
         <label>Ascensores</label>
-        <counter-avaluo />
+        <counter-avaluo count="Ascensor" />
       </div>
     </div>
   </div>
@@ -53,9 +52,11 @@
 
 <script setup>
 import CounterAvaluo from '../FormComponents/CounterAvaluo.vue';
+import { userFormAvaluoStore } from "../../../stores/FormAvaluo";
 import { tipos, estratos, numerodepisos, numerodeniveles } from "../../../data/formData";
-import { inject, ref } from "vue";
+import { ref } from "vue";
 
+const useFormAvaluo = userFormAvaluoStore()
 const tipo = ref()
 const estrato = ref()
 const area = ref()
@@ -63,21 +64,11 @@ const piso = ref()
 const niveles = ref()
 const habitaciones = ref()
 
-console.log(tipo.value);
-
-const { tipoinmueble, setTipoinmueble } = inject('settipoinmueble');
-
-
-
-/* const //
-        "label": "Putumayo",
-        "value": "86"
-},
-{
-        "label": "Putumayo",
-        "value": "86"
+const updateStepTwo = () => {
+  useFormAvaluo.stepTwo(tipo.value.label, area.value, estrato.value, piso.value, niveles.value);
 }
-] */
+
+defineExpose({ updateStepTwo })
 
 </script>
 <style lang="scss" scoped>
