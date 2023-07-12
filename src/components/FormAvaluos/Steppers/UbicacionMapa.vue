@@ -136,6 +136,8 @@ const getCoordinates = () => {
 
 };
 
+console.log(useFormAvaluo.documents);
+
 const updateStepOne = () => {
   useFormAvaluo.stepOne(setAdrressComplete.value, formattedAddress.value, selectedDepartment.value.value, selectedCityData.value.value.replace(".", ""), latitude.value, longitude.value);
 }

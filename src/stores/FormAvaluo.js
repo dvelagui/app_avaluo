@@ -5,12 +5,10 @@ export const userFormAvaluoStore = defineStore("formavaluo", {
     documents: {
       entrada: "formulario",
       test: false,
-      direccion: "direccion",
-      direccion_formato: "direccionFormato",
-      dpto_ccdgo: "dpto",
-      mpio_ccdgo: "mpio",
-      latitud: "lat",
-      longitud: "long",
+      habitaciones: 0,
+      banos: 0,
+      garajes: 0,
+      numeroascensor: 0,
     },
     loadingUser: false,
   }),
@@ -22,6 +20,7 @@ export const userFormAvaluoStore = defineStore("formavaluo", {
       this.documents.mpio_ccdgo = mpio;
       this.documents.latitud = lat;
       this.documents.longitud = long;
+      console.log(this.documents);
     },
     stepTwo(tipoinmueble, area, estrato, numerodepiso, numerodeniveles) {
       this.documents.tipoinmueble = tipoinmueble;
@@ -48,6 +47,7 @@ export const userFormAvaluoStore = defineStore("formavaluo", {
       this.documents.phone = phone;
       this.documents.action = action;
       this.documents.checkbox = checkbox;
+      console.log(this.documents);
     },
   },
 });

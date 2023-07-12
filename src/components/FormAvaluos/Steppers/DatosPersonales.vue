@@ -51,7 +51,7 @@ const updateStepFinal = () => {
   useFormAvaluo.stepFinal(name.value, email.value, phone.value, action.value, checkbox.value);
 }
 
-defineExpose({ updateStepTwo })
+defineExpose({ updateStepFinal })
 
 provide("setCheck", { checkbox, setCheck })
 

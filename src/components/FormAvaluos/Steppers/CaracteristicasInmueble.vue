@@ -60,9 +60,8 @@ const useFormAvaluo = userFormAvaluoStore()
 const tipo = ref()
 const estrato = ref()
 const area = ref()
-const piso = ref()
-const niveles = ref()
-const habitaciones = ref()
+const piso = ref(1)
+const niveles = ref(1)
 
 const updateStepTwo = () => {
   useFormAvaluo.stepTwo(tipo.value.label, area.value, estrato.value, piso.value, niveles.value);

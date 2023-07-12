@@ -20,4 +20,45 @@ const numerodeniveles = [1, 2, 3, 4, 5];
 
 const tipoNegocio = ["Vender", "Comprar", "Arrendar"];
 
-export { tipos, estratos, numerodepisos, numerodeniveles, tipoNegocio };
+const tiempoconstruido = [
+  "Entre 0 y 5 años",
+  "Entre 5 y 10 años",
+  "Entre 10 y 15 años",
+  "Más de 20 años",
+];
+
+const tipovista = ["Exterior", "Interior"];
+
+const extras = [
+  {
+    label: "Balcón",
+    value: "balcon",
+  },
+  {
+    label: "Baño de servicio",
+    value: "banoservicio",
+  },
+  {
+    label: "Club house",
+    value: "club",
+  },
+  {
+    label: "Conjunto Cerrado",
+    value: "conjunto",
+  },
+  {
+    label: "Cuarto de Servicio",
+    value: "cuartoservicio",
+  },
+];
+
+export {
+  tipos,
+  estratos,
+  numerodepisos,
+  numerodeniveles,
+  tipoNegocio,
+  tiempoconstruido,
+  tipovista,
+  extras,
+};

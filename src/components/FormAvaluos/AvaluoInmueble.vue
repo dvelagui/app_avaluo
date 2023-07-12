@@ -13,8 +13,12 @@
         <caracteristicas-inmueble ref="dataCaracteristicas" class="q-px-sm q-px-md-xl" />
       </q-step>
 
-      <q-step class="q-px-sm q-px-md-xl" :name="3" title="Datos personales" icon="fa-solid fa-3" :done="step > 3">
-        <datos-personales class="q-px-sm q-px-md-xl" />
+      <q-step class="q-px-sm q-px-md-xl" :name="3" title="Características del inmueble" icon="fa-solid fa-3"
+        :done="step > 3">
+        <OpcionesInmueble ref="dataCaracteristicasInmueble" class="q-px-sm q-px-md-xl" />
+      </q-step>
+      <q-step class="q-px-sm q-px-md-xl" :name="4" title="Datos personales" icon="fa-solid fa-3" :done="step > 3">
+        <datos-personales ref="dataDatosPersonales" class="q-px-sm q-px-md-xl" />
       </q-step>
 
       <template v-slot:navigation>
@@ -30,6 +34,7 @@
 <script setup>
 import UbicacionMapa from './Steppers/UbicacionMapa.vue';
 import CaracteristicasInmueble from './Steppers/CaracteristicasInmueble.vue';
+import OpcionesInmueble from './Steppers/OpcionesInmueble.vue';
 import DatosPersonales from './Steppers/DatosPersonales.vue';
 import { userDatabaseStore } from "../../stores/database";
 import { reportDatabaseStore } from "../../stores/reports";
@@ -44,6 +49,7 @@ const useFormAvaluo = userFormAvaluoStore()
 const router = useRouter();
 const dataUbicacion = ref(null)
 const dataCaracteristicas = ref(null)
+const dataDatosPersonales = ref(null)
 const stepper = ref()
 const step = ref(1);
 const date = new Date().toLocaleDateString();
@@ -60,11 +66,15 @@ const stepperForm = () => {
   } else if (step.value === 2) {
     dataCaracteristicas.value.updateStepTwo()
     stepper.value.next()
+  } else if (step.value === 3) {
+    dataDatosPersonales.value.updateStepFinal()
+    stepper.value.next()
   }
   else {
     step.value = step.value + 1;
   }
 }
+
 
 </script>
 
