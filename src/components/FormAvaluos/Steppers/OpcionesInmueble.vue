@@ -62,9 +62,8 @@
       </div>
     </div> -->
     <div class="row items-center justify-center q-mt-md">
-      <div class="col-4 q-pa-sm text-center" v-for="extra in extras" :key="extra.label">
-        // eslint-disable-next-line vue/no-parsing-error
-        <RadioAvaluo :labelName="extra.label" @checkvalue="extra.value = $event" />
+      <div class="col-4 q-pa-sm text-center">
+        <RadioAvaluo labelName="extra.label" @checkvalue="club = $event" />
       </div>
     </div>
     <div class="row">
