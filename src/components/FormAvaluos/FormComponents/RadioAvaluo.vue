@@ -32,9 +32,9 @@ label {
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 120%;
   letter-spacing: -0.01em;
-  color: #6B7082;
+  color: #060606;
 }
 </style>
